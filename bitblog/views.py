@@ -21,9 +21,9 @@ def post_detail(slug):
     return render_template('post_detail.html', post=post)
 
 @app.route('/<regex("[A-Za-z0-9_-]"):slug>/edit')
-def post_edit(slug):
+def edit_post(slug):
     post = Post.query.filter_by(slug=slug).first()
     if post is None:
         abort(404)
     form = PostForm()
-    return render_template('post_edit.html', form=form)
+    return render_template('edit_post.html', form=form)
