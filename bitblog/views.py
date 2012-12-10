@@ -27,3 +27,10 @@ def edit_post(slug):
         abort(404)
     form = PostForm()
     return render_template('edit_post.html', form=form)
+
+@app.route('/<regex("[A-Za-z0-9_-]"):slug>/delete')
+def delete_post(slug):
+    post = Post.query.filter_by(slug=slug).first()
+    if post is None:
+        abort(404)
+    return render_template('delete_post.html')
