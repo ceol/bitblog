@@ -15,22 +15,19 @@ def new_post():
 
 @app.route('/<regex("[A-Za-z0-9_-]"):slug>')
 def post_detail(slug):
-    post = Post.query.filter_by(slug=slug).first()
-    if post is None:
-        abort(404)
+    post = Post.slug_or_404()
+    
     return render_template('post_detail.html', post=post)
 
 @app.route('/<regex("[A-Za-z0-9_-]"):slug>/edit')
 def edit_post(slug):
-    post = Post.query.filter_by(slug=slug).first()
-    if post is None:
-        abort(404)
+    post = Post.slug_or_404()
+    
     form = PostForm()
-    return render_template('edit_post.html', form=form)
+    return render_template('edit_post.html', post=post, form=form)
 
 @app.route('/<regex("[A-Za-z0-9_-]"):slug>/delete')
 def delete_post(slug):
-    post = Post.query.filter_by(slug=slug).first()
-    if post is None:
-        abort(404)
-    return render_template('delete_post.html')
+    post = Post.slug_or_404()
+
+    return render_template('delete_post.html', post=post)
