@@ -20,6 +20,12 @@ class BaseQuery(Query):
             abort(404)
         return rv
 
+    def slug_or_404(self, slug):
+        rv = self.query.filter_by(slug=slug).first()
+        if rv is None:
+            abort(404)
+        return rv
+
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
